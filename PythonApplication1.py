@@ -16,7 +16,7 @@ large = 800
 high = 600
 ##EndScreen
 ##SizeChar
-size = 40
+size = 30
 ##EndSizeChar
 ##FuncTime
 tokei = pygame.time.Clock()
@@ -31,34 +31,64 @@ def game():
  pos_y2 = randint(0,(high - size) / 10) * 10
  speed_x = 0
  speed_y = 0
+
+ dx=0
+ dx1=0
+ dy = 0
+ dy1 = 0
+
  sair = True
  while sair:
+     ##Movements##
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sair = False
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_LEFT:
-            pos_x-=5
+            dx=-5
         if event.key == pygame.K_RIGHT:
-            pos_x+=5
+            dx=+5
         if event.key == pygame.K_UP:
-            pos_y-=5
+            dy=-5
         if event.key == pygame.K_DOWN:
-            pos_y+=5
+            dy=+5
         if event.key == pygame.K_a:
-            pos_x2-=5
+            dx1=-5
         if event.key == pygame.K_d:
-            pos_x2+=5
+            dx1=+5
         if event.key == pygame.K_w:
-            pos_y2-=5
+            dy1=-5
         if event.key == pygame.K_s:
-            pos_y2+=5
+            dy1=+5
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_LEFT:
+            dx=0
+        if event.key == pygame.K_a:
+            dx1=0
+        if event.key == pygame.K_RIGHT:
+            dx=0
+        if event.key == pygame.K_d:
+            dx1=0
+        if event.key == pygame.K_UP:
+            dy=0
+        if event.key == pygame.K_w:
+            dy1=0
+        if event.key == pygame.K_DOWN:
+            dy=0
+        if event.key == pygame.K_s:
+            dy1=0
+    
+    pos_x= pos_x + dx
+    pos_x2= pos_x2 + dx1
+    pos_y= pos_y + dy
+    pos_y2= pos_y2 + dy1
+
     backgrd.fill(black)
     pygame.draw.rect(backgrd, white, [pos_x,pos_y,size,size])
     pygame.draw.rect(backgrd, red, [pos_x2,pos_y2,size,size])
     pos_x+=speed_x
     pos_y+=speed_y
-    tokei.tick(600)
+    tokei.tick(30)
     if pos_x > large:
         pos_x = 0
     if pos_x < 0:
