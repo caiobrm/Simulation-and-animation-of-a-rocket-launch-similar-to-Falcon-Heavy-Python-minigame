@@ -27,6 +27,8 @@ def game():
     ##
  pos_x = randint(0,(large - size) / 10) * 10
  pos_y = randint(0,(high - size) / 10) * 10
+ pos_x2 = randint(0,(large - size) / 10) * 10
+ pos_y2 = randint(0,(high - size) / 10) * 10
  speed_x = 0
  speed_y = 0
  sair = True
@@ -34,24 +36,29 @@ def game():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sair = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                speed_y = 0
-                speed_x = -2
-            if event.key == pygame.K_RIGHT:
-                speed_y = 0
-                speed_x = 2
-            if event.key == pygame.K_UP:
-                speed_y = -2
-                speed_x = 0
-            if event.key == pygame.K_DOWN:
-                speed_y = 2
-                speed_x = 0
-    backgrd.fill(white)
-    pygame.draw.rect(backgrd, black, [pos_x,pos_y,size,size])
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_LEFT:
+            pos_x-=5
+        if event.key == pygame.K_RIGHT:
+            pos_x+=5
+        if event.key == pygame.K_UP:
+            pos_y-=5
+        if event.key == pygame.K_DOWN:
+            pos_y+=5
+        if event.key == pygame.K_a:
+            pos_x2-=5
+        if event.key == pygame.K_d:
+            pos_x2+=5
+        if event.key == pygame.K_w:
+            pos_y2-=5
+        if event.key == pygame.K_s:
+            pos_y2+=5
+    backgrd.fill(black)
+    pygame.draw.rect(backgrd, white, [pos_x,pos_y,size,size])
+    pygame.draw.rect(backgrd, red, [pos_x2,pos_y2,size,size])
     pos_x+=speed_x
     pos_y+=speed_y
-    tokei.tick(300)
+    tokei.tick(600)
     if pos_x > large:
         pos_x = 0
     if pos_x < 0:
@@ -60,6 +67,14 @@ def game():
         pos_y = 0
     if pos_y < 0:
         pos_y = high - size
+    if pos_x2 > large:
+        pos_x2 = 0
+    if pos_x2 < 0:
+        pos_x2 = large - size
+    if pos_y2 >= high:
+        pos_y2 = 0
+    if pos_y2 < 0:
+        pos_y2 = high - size
     ##
     pygame.display.update()
 
