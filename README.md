@@ -3,7 +3,7 @@
 First, I would like to thank @brandaogbs for their support in developing this code.
 
 ----------------------------------------------------------------------------------------------------------------------------
-VERY IMPORTANT FOR USE THE EXECUTABLE
+VERY IMPORTANT WHEN USING THE EXECUTABLE:
 1. Do not move the cursor over the game window. If this occurs, remove the cursor from the window and press the up arrow.
 3. Every time you start a new launch a .csv file is generated in the "logs" folder and it contains all the simulation data.
 2. COMMANDS:
