@@ -1,11 +1,6 @@
-from database import database
-from Rocket import Rocket
-from Engine import Engine
+from libs.database import Database
+from libs.Rocket import Rocket
 from datetime import datetime
-from onboardcomp import onboardcomp
-rocket = Rocket()
-engine = Engine()
-data = database()
 timedate = datetime.now()
 
 class dynamics:
@@ -31,8 +26,7 @@ def fthrust(nEngine, enginethrust):
 def masst(mass, massc):
     return mass + massc
 def grav(alt):
-    from database import database
-    g = (data.G*data.Mt)/(alt+data.Rt)**2
+    g = (Database.G*Database.Mt)/(alt+Database.Rt)**2
     return g
 
 def datm (alt):
@@ -45,8 +39,8 @@ def dragforce(v1, alt):
     drag = (datm(alt)*rocket.Cx*rocket.Ar*v1**2)/2
     return drag
 def pforce(mass, alt):
-    data.g = grav(alt)
-    p = mass * data.g
+    Database.g = grav(alt)
+    p = mass * Database.g
     return p
 def rforce(nEngine, enginethrust, v1, mass, alt):
     if v1 < 0:
@@ -55,40 +49,29 @@ def rforce(nEngine, enginethrust, v1, mass, alt):
     a = (fthrust(nEngine, enginethrust) -dragforce(v1,alt) -pforce(mass,alt))/mass
     return a
 
-def epower (v1):
-    if v1>0 and v1 < 20:
-        return 20
-    if v1 > 20 and v1 < 40:
-        return 23
-    if v1 > 40 and v1 < 70:
-        return 24
-    if v1 > 70 and v1 < 90:
-        return 21
-    if v1 > 90 and v1 < 120:
-        return 22
-    if v1 > 120 and v1 < 160:
-        return 20
-    if v1 > 220 and v1 < 270:
-        return 18
-    if v1 > 270 and v1 < 300:
-        return 16
-    if v1 > 300 and v1 < 310:
-        return 16
-    if v1 > 310 and v1 < 350:
-        return 18
-    if v1 > 350 and v1 < 390:
-        return 20.5
-    if v1 > 390 and v1 < 450:
-        return 20
-    if v1 > 450 and v1 < 550:
-        return 21
-    if v1 > 550 and v1 < 650:
-        return 20
-    if v1 > 850 and v1 < 950:
-        return 20
-    if v1 > 5646:
-        return 9
-    if v1 > 10906:
-        return 1
-    else:
-        return 22
+def epower(v1):
+    intervals = [
+        (0, 20, 20),
+        (20, 40, 23),
+        (40, 70, 24),
+        (70, 90, 21),
+        (90, 120, 22),
+        (120, 160, 20),
+        (220, 270, 18),
+        (270, 300, 16),
+        (300, 310, 16),
+        (310, 350, 18),
+        (350, 390, 20.5),
+        (390, 450, 20),
+        (450, 550, 21),
+        (550, 650, 20),
+        (850, 950, 20),
+        (5646, float('inf'), 9),
+        (10906, float('inf'), 1)
+    ]
+    
+    for lower, upper, value in intervals:
+        if lower < v1 <= upper:
+            return value
+    
+    return 22 #default value

@@ -1,5 +1,4 @@
-import pygame
-from database import database
+
 class Rocket:
 
     def __init__(self):
@@ -11,3 +10,8 @@ class Rocket:
         self.up = False
         self.flycount = 0
         self.belowalt = True
+        self.speed_y = 0
+        self.speed_altimeter = 0
+        self.pos_x = 635
+        self.pos_y = -384
+        self.pos_y2 = -384
